@@ -6,14 +6,14 @@ import pytest
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'WHATSUPPP NIGGA'
 
 
 @app.route('/recipes', methods=['POST'])
 def create_recipe():
     recipe_name = request.json['recipe_name']
-    description = request.json['description']
-    recipe = Recipe(recipe_name, description)
+    Ingrediants = request.json['Ingrediants']
+    recipe = Recipe(recipe_name, Ingrediants)
     db.session.add(recipe)
     db.session.commit()
     return format_recipes(recipe)
@@ -26,7 +26,7 @@ def get_recipes():
 
 #
 @app.route('/recipes/<int:id>', methods=['GET'])
-def get_recipes(id):
+def get_recipe(id):
     recipe = Recipe.query.get(id)
     return format_recipes(recipe)
 
@@ -51,6 +51,8 @@ def format_recipes(recipe):
         'id': recipe.id,
         'recipe_name': recipe.recipe_name,
         'recipe_favorite': recipe.favorite,
-        'description':  recipe.description,
+        'Ingrediants':  recipe.Ingrediants,
+        'Steps': recipe.steps,
         'created_at': recipe.created_at
     }
+
