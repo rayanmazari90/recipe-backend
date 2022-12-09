@@ -25,6 +25,7 @@ class DevelopmentConfig(Config):
     dbport=os.getenv('DBPORT')
     )
     DEBUG = True
+    
 
 class GithubCIConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'

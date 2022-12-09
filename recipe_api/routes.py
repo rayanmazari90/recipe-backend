@@ -1,19 +1,26 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from recipe_api import db, app
 from recipe_api.models import Recipe
 import pytest
+from flask_cors import CORS
+import sys
 
 
-@app.route('/')
+
+CORS(app)
+
+
+@app.route('/', methods=["GET"])
 def hello_world():
-    return 'WHATSUPPP NIGGA'
-
+    return 'HELLO WORLD'
 
 @app.route('/recipes', methods=['POST'])
 def create_recipe():
-    recipe_name = request.json['recipe_name']
-    Ingrediants = request.json['Ingrediants']
-    recipe = Recipe(recipe_name, Ingrediants)
+    print("hello",request.json)
+    name = request.json["name"]
+    ingredients = request.json["ingredients"]
+    steps = request.json["steps"]
+    recipe = Recipe(name, ingredients, steps)
     db.session.add(recipe)
     db.session.commit()
     return format_recipes(recipe)
@@ -34,7 +41,7 @@ def get_recipe(id):
 @app.route('/recipes/<int:id>', methods=['PUT'])
 def update_recipes(id):
     recipe = Recipe.query.get(id)
-    recipe.recipe_name = request.json['recipe_name']
+    recipe.name = request.json['name']
     db.session.commit()
     return format_recipes(recipe)
 #
@@ -47,12 +54,10 @@ def delete_recipes(id):
 
 def format_recipes(recipe):
     return {
-
         'id': recipe.id,
-        'recipe_name': recipe.recipe_name,
-        'recipe_favorite': recipe.favorite,
-        'Ingrediants':  recipe.Ingrediants,
+        'recipe_name': recipe.name,
+        'recipe_favourites': recipe.favourites,
+        'ingredients':  recipe.ingredients,
         'Steps': recipe.steps,
-        'created_at': recipe.created_at
+        'created_at': recipe.date_created
     }
-
