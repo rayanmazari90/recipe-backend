@@ -12,7 +12,7 @@ CORS(app)
 
 @app.route('/', methods=["GET"])
 def hello_world():
-    return 'HELLO WORLD'
+    return 'HELLO DEAR CUSTOMER, WELCOME TO THE NEW COLABORATIVE PLATFORM FOR RECIPES'
 
 @app.route('/recipes', methods=['POST'])
 def create_recipe():
@@ -20,7 +20,13 @@ def create_recipe():
     name = request.json["name"]
     ingredients = request.json["ingredients"]
     steps = request.json["steps"]
-    recipe = Recipe(name, ingredients, steps)
+    rating = request.json["rating"]
+    if request.json["favourites"].str.lower()== "true":
+        favourites = True
+    else:
+        favourites = False
+
+    recipe = Recipe(name, ingredients, steps, rating, favourites)
     db.session.add(recipe)
     db.session.commit()
     return format_recipes(recipe)
@@ -42,6 +48,9 @@ def get_recipe(id):
 def update_recipes(id):
     recipe = Recipe.query.get(id)
     recipe.name = request.json['name']
+    recipe.ingredients = request.json['ingredients']
+    recipe.steps = request.json['steps']
+    recipe.rating = request.json['rating']
     db.session.commit()
     return format_recipes(recipe)
 #
@@ -55,9 +64,10 @@ def delete_recipes(id):
 def format_recipes(recipe):
     return {
         'id': recipe.id,
-        'recipe_name': recipe.name,
-        'recipe_favourites': recipe.favourites,
+        'name': recipe.name,
+        'favourites': recipe.favourites,
         'ingredients':  recipe.ingredients,
-        'Steps': recipe.steps,
-        'created_at': recipe.date_created
+        'steps': recipe.steps,
+        'date_created': recipe.date_created,
+        'rating': recipe.rating
     }

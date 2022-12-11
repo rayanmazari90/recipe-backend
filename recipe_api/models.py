@@ -15,12 +15,12 @@ class Recipe(db.Model):
     def __repr__(self):
         return '<Event %r>' % self.name+"ID : "
 
-    def __init__(self, name,steps, ingredients):
+    def __init__(self, name,steps, ingredients, rating, favourites):
         self.ingredients = ingredients
-        self.steps= steps
         self.name = name
-        self.favourites = False
-        self.rating = 5
+        self.steps= steps
+        self.favourites = favourites
+        self.rating = rating
 
 
 """class Recipe(db.Model):
