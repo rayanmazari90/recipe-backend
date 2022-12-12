@@ -21,7 +21,8 @@ def create_recipe():
     ingredients = request.json["ingredients"]
     steps = request.json["steps"]
     rating = request.json["rating"]
-    if request.json["favourites"].str.lower()== "true":
+    print(request.json["favourites"])
+    if request.json["favourites"].lower()== "true":
         favourites = True
     else:
         favourites = False
@@ -51,6 +52,10 @@ def update_recipes(id):
     recipe.ingredients = request.json['ingredients']
     recipe.steps = request.json['steps']
     recipe.rating = request.json['rating']
+    if request.json['favourites']=="true":
+        recipe.favourites= True
+    else:
+        recipe.favourites= False
     db.session.commit()
     return format_recipes(recipe)
 #
