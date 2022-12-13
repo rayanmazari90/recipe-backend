@@ -39,6 +39,22 @@ def test_create_recipe(testing_client):
                         })
     assert response.status_code == 200
 
+def test_create_recipe_failing(testing_client):
+    """
+    GIVEN a Flask application
+    WHEN the '/accounts' page is posted to (POST)
+    THEN check the response is valid
+    """
+    response = testing_client.post(
+        '/recipes', json={  
+                            'name': 'Paella',
+                            'ingredients': 'rice, and others',
+                            'steps':'put in the water,cook', 
+                            'rating':5, 
+                            'favourites': "true"
+                        })
+    assert response.status_code == 200
+
 
 def test_get_account_by_id(testing_client):
     """
@@ -64,9 +80,8 @@ def test_update_failing(testing_client):
     response = testing_client.put('/recipes/1',json={   'name': 'Paella',
                                                         'ingredients': 'rice, and others',
                                                         'steps':'put in the water,cook', 
-                                                        'rating':5, 
+                                                        'rating':"helloimruningthecode", 
                                                         'favourites': "false",
-                                                        'NONPARAMETER':"FAIL"
                                                      })
     assert response.status_code == 500
 
