@@ -54,6 +54,7 @@ jobs:
         path: |
           . 
   deploy-dev:
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     needs: build
     environment:
@@ -79,6 +80,7 @@ jobs:
         slot-name: 'Development'
 
   deploy-prod:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     needs: build
     environment:
