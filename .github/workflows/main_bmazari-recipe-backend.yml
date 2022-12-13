@@ -1,6 +1,6 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-name: IEbank backend CICD
+name: Recipe backend CICD
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       DBPASS: bla
       DBNAME: bla
   
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
