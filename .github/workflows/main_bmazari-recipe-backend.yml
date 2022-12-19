@@ -79,7 +79,6 @@ jobs:
       id: deploy-to-webapp
       with:
         app-name: 'bmazari-assignment-app-BE-dev-bicep'
-        slot-name: 'Development'
 
   deploy-prod:
     if: github.ref == 'refs/heads/master'
